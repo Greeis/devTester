@@ -3,10 +3,12 @@
 </head>
 
 <body>
-  {{> navbar}}
   {{> sAlert}}
-  {{> novoContato}}
-  
+  {{> navbar}}
+  <div id="paginaPrincipal" class="container">
+    {{ >listaContato}}
+    {{ >novoContato}}
+  </div>
 </body>
 
 <!-- COMPONENTES -->
@@ -40,30 +42,60 @@
   </div>
 </template>
 
-<template name="novoContato">
-  <div class="container novo-contato">
-    <h4>Novo Contato</h4>
-    <form name="novoContato">
-      <div class="form-group">
-        <input name="nome" id="nome" class="form-control form-control-sm" type="text" placeholder="Nome completo">
-      </div>
-      <div class="form-group">
-        <input name="email" id="email" class="form-control form-control-sm" type="text" placeholder="Email">
-      </div>
-      <div class="form-group">
-        <input name="celular" id="celular" class="form-control form-control-sm" type="text" placeholder="Celular"
-          data-test="celular">
-      </div>
-      <div class="form-group">
-        <select name="tipo" id="tipo" class="form-control form-control-sm">
-          <option value="" disabled selected>Selecione</option>
-          <option value="Whats">Whats</option>
-          <option value="Telegram">Telegram</option>
-          <option value="SMS">SMS</option>
-        </select>
-        <small class="form-text text-muted">Você deve selecionar pelo menos um tipo de contato.</small>
-      </div>
-      <input id="salvarContato" type="submit" class="btn btn-success" value="Cadastrar">
-    </form>
+<template name="listaContato">
+  <h4><i class="fa fa-address-book"></i> Meus contatos</h4>
+
+  {{#if minhaLista}}
+  <table class="table">
+    <thead>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Celular</th>
+      <th>Tipo de contato</th>
+    </thead>
+    <tbody>
+      {{#each minhaLista}}
+      <tr>
+        <td>{{nome}}</td>
+        <td>{{email}}</td>
+        <td>{{celular}}</td>
+        <td><i class="fa {{retornaIcone tipo}}"></i> {{tipo}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+  <div class="alert alert-info" role="alert">
+    <p>Você ainda não possui contatos cadastrados.</p>
   </div>
+  {{/if}}
+</template>
+
+<template name="novoContato">
+  <h4><i class="fa fa-save"></i> Novo Contato</h4>
+
+  <form name="novoContato">
+    
+    <div class="form-group">
+      <input name="nome" id="nome" class="form-control form-control-sm" type="text" placeholder="Nome completo">
+    </div>
+    
+    <div class="form-group">
+      <input name="email" id="email" class="form-control form-control-sm" type="text" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <input name="celular" id="celular" class="form-control form-control-sm" type="text" placeholder="Celular"
+        data-test="celular">
+    </div>
+    <div class="form-group">
+      <select name="tipo" id="tipo" class="form-control form-control-sm">
+        <option value="" disabled selected>Selecione</option>
+        <option value="Whats">Whats</option>
+        <option value="Telegram">Telegram</option>
+        <option value="SMS">SMS</option>
+      </select>
+      <small class="form-text text-muted">Você deve selecionar pelo menos um tipo de contato.</small>
+    </div>
+    <input id="salvarContato" type="submit" class="btn btn-success" value="Adicionar Contato">
+  </form>
 </template>

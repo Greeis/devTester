@@ -1,3 +1,8 @@
+Before do
+    @contato_page = ContatoPage.new
+end
+
+
 After ('@inserirContato') do
     res = DAO.new.busca_celular(@novo_contato[:celular])
 

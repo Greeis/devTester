@@ -51,4 +51,4 @@ Funcionalidade: Novo Contato
             | tipo    | Whats              |
         Mas já existe um contato cadastrado com este celular
         Quando faço o cadastro deste novo contato
-        Então devo ver a mensagem de alerta "Celular já cadastrado para outro contato."
+        Então devo ver a seguinte mensagem de alerta "Celular já cadastrado para outro contato."

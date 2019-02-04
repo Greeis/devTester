@@ -6,8 +6,16 @@ class DAO
         contatos.find('celular' => celular).first
     end
 
+    def busca_nome(nome)
+        contatos.find('nome' => nome).first
+    end
+
     def delete_celular(celular)
         contatos.delete_many('celular' => celular)
+    end
+
+    def limpa_contatos
+        contatos.delete_many
     end
 
 

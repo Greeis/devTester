@@ -1,14 +1,14 @@
 import { Meteor } from "meteor/meteor";
 import { onPageLoad } from "meteor/server-render";
-import {Mongo} from 'meteor/mongo'
+import { Mongo } from 'meteor/mongo';
 
 Meteor.startup(() => {
-  // Code to run on server startup.
-  console.log('Ola Meteor. Estou do lado do servidor :) BACK-END');
+  
   const Contato = new Mongo.Collection('contatos');
 
   Meteor.methods({
     'inserirContato'(contato){
+      
       var existe = Contato.findOne({ //verifica se já existe
         celular: contato.celular
       })
@@ -18,6 +18,9 @@ Meteor.startup(() => {
       }else{
         Contato.insert(contato);  // cadastra o contato
       }
+    },
+    'removerContato'(contatoID) {
+      return Contato.remove({_id: contatoID});
     }
   })
 });
