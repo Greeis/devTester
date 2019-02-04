@@ -1,0 +1,69 @@
+<head>
+  <title>DevTester</title>
+</head>
+
+<body>
+  {{> navbar}}
+  {{> sAlert}}
+  {{> novoContato}}
+  
+</body>
+
+<!-- COMPONENTES -->
+
+<template name="navbar">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="#">DevTester</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+  </div>
+</template>
+
+<template name="novoContato">
+  <div class="container novo-contato">
+    <h4>Novo Contato</h4>
+    <form name="novoContato">
+      <div class="form-group">
+        <input name="nome" id="nome" class="form-control form-control-sm" type="text" placeholder="Nome completo">
+      </div>
+      <div class="form-group">
+        <input name="email" id="email" class="form-control form-control-sm" type="text" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <input name="celular" id="celular" class="form-control form-control-sm" type="text" placeholder="Celular"
+          data-test="celular">
+      </div>
+      <div class="form-group">
+        <select name="tipo" id="tipo" class="form-control form-control-sm">
+          <option value="" disabled selected>Selecione</option>
+          <option value="Whats">Whats</option>
+          <option value="Telegram">Telegram</option>
+          <option value="SMS">SMS</option>
+        </select>
+        <small class="form-text text-muted">Você deve selecionar pelo menos um tipo de contato.</small>
+      </div>
+      <input id="salvarContato" type="submit" class="btn btn-success" value="Cadastrar">
+    </form>
+  </div>
+</template>
