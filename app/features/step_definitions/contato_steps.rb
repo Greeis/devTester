@@ -25,12 +25,10 @@
     expect(res).to be_nil 
   end
 
-
   #Lista
 
-  Dado("que tenho os seguintes contatos cadastrados:") do |table|
+  Dado("que possuo a seguinte lista de contatos para cadastro:") do |table|
     @lista_contato = table.hashes
-
     @contato_page.visita
 
     @lista_contato.each do |contato|
@@ -44,6 +42,25 @@
   
   Quando("acesso a minha agenda") do
     @contato_page.visita
+  end
+
+    
+  Quando("solicito a exclusão deste contato") do
+    @celular = @lista_contato.first[:celular]
+    #quero um TR que contenha o mesmo valor que o celular e apague
+    
+    #find('tr', text: celular).find('#deletarContato').click
+
+    @contato_page.remover_contato(@celular)
+    sleep 5
+  end
+
+  Quando("confirmo a exclusao") do
+    @contato_page.confirma_modal
+  end
+
+  Quando("desisto da exclusão") do
+    @contato_page.cancela_modal
   end
   
   Então("devo ver estes registros na lista de contatos") do
@@ -62,5 +79,15 @@
     expect(@contato_page.msg_alert_info).to eql msg_alerta
     sleep 5
   end
+
+  Então("eu não devo ver este contato na minha agenda") do
+    res = DAO.new.busca_celular(@celular)
+    #espero que o celular seja nulo
+    expect(res).to be_nil
+  end
   
+  Então("este contato permanece na minha agenda") do
+    res = DAO.new.busca_celular(@celular)
+    expect(res[:celular]).to eql @celular
+  end
   
