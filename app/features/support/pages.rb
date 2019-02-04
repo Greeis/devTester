@@ -20,6 +20,18 @@ class ContatoPage
         click_on 'Adicionar Contato'
     end
 
+    def remover_contato(celular)
+        find('tr', text: celular).find('#deletarContato').click
+    end
+
+    def confirma_modal
+        find('.swal2-confirm').click
+    end
+    
+    def cancela_modal
+        find('.swal2-cancel').click
+    end
+
     def msg_alert_box
         find('.s-alert-box')
     end

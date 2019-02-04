@@ -52,6 +52,7 @@
       <th>Email</th>
       <th>Celular</th>
       <th>Tipo de contato</th>
+      <th>Ações</th>
     </thead>
     <tbody>
       {{#each minhaLista}}
@@ -60,6 +61,7 @@
         <td>{{email}}</td>
         <td>{{celular}}</td>
         <td><i class="fa {{retornaIcone tipo}}"></i> {{tipo}}</td>
+        <td><button class="btn btn-sm btn-outline-danger" id="deletarContato"><i class="fa fa-trash"></i></button></td>
       </tr>
       {{/each}}
     </tbody>

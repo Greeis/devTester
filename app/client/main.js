@@ -44,14 +44,27 @@ Template.listaContato.helpers({
 })
 
 Template.listaContato.events({
-    'click #deletarContato'(event, instance){
+    'click #deletarContato'(event, instance) {
         event.preventDefault();
-        Meteor.call('removerContato', this,_id, function(err, res){
-            if (err){
-                sAlert.error(err.reason);
-                return false;
-            }else{
-                sAlert.success('Contato removido com sucesso.');
+        swal({
+            title: 'Você tem certeza?',
+            text: "Se confirmar, não terá volta.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, pode apagar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                Meteor.call('removerContato', this._id, function (err, res) {
+                    if (err) {
+                        sAlert.error(err.reason);
+                        return false;
+                    } else {
+                        sAlert.success('Contato removido com sucesso.');
+                    }
+                })
             }
         })
     }
@@ -95,9 +108,5 @@ Template.novoContato.events({ // criando eventos
                 sAlert.success('Contato cadastrado com sucesso.')
             }
         })
-    },
-    'click #deleteContato'(event, instance) {
-        //Deletar contato
     }
-
 });
