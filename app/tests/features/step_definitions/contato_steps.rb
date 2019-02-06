@@ -1,7 +1,15 @@
-  Dado("que possuo o seguinte contato:") do |table| 
+  Dado("que estou autenticado com {string} e {string}") do |email, senha|
+    @login_page.acessa
+    @login_page.logar(email,senha)
+    expect(@contato_page.titulo).to eql 'Meus Contatos'
+    @email_usr = email
+    @contato_page.fecha_salert
+  end
+
+  Dado("que possuo o seguinte contato:") do |table|
     @novo_contato = table.rows_hash
   end
-  
+
   Dado("já existe um contato cadastrado com este celular") do
     steps %(
       Quando faço o cadastro deste novo contato
@@ -27,7 +35,7 @@
 
   #Lista
 
-  Dado("que possuo a seguinte lista de contatos para cadastro:") do |table|
+  Dado("tenho a seguinte lista de contatos para cadastro:") do |table|
     @lista_contato = table.hashes
     @contato_page.visita
 
@@ -36,8 +44,8 @@
     end
   end
 
-  Dado("que não possuo contatos cadastrados") do
-    DAO.new.limpa_contatos
+  Dado("não possuo contatos cadastrados") do
+    DAO.new.limpa_contatos(@email_usr)
   end
   
   Quando("acesso a minha agenda") do
@@ -52,7 +60,6 @@
     #find('tr', text: celular).find('#deletarContato').click
 
     @contato_page.remover_contato(@celular)
-    sleep 5
   end
 
   Quando("confirmo a exclusao") do
@@ -62,6 +69,19 @@
   Quando("desisto da exclusão") do
     @contato_page.cancela_modal
   end
+
+  Quando("faço o cadastro dos seguintes contatos:") do |table|
+    @contatos = table.hashes
+
+    @alertas = []
+
+    @contatos.each do |c| # salva os contatos sequencialmente
+      @contato_page.salvar_contato(c)
+    end
+    @alertas.push(@contato_page.msg_alert_box.text) #salva no array as mensagens de alerta
+    @contato_page.fecha_salert
+  end
+
   
   Então("devo ver estes registros na lista de contatos") do
     trs = @contato_page.retorna_trs
@@ -76,8 +96,7 @@
   end
     
   Então("devo ver a mensagem {string}") do |msg_alerta|
-    expect(@contato_page.msg_alert_info).to eql msg_alerta
-    sleep 5
+    expect(@contato_page.msg_alert_warning).to eql msg_alerta
   end
 
   Então("eu não devo ver este contato na minha agenda") do
@@ -89,5 +108,11 @@
   Então("este contato permanece na minha agenda") do
     res = DAO.new.busca_celular(@celular)
     expect(res[:celular]).to eql @celular
+  end
+  
+  Então("devo ver {string} como mensagem de alerta") do |msg_alerta|
+    @alertas.each do |a|
+      expect(a). to eql msg_alerta
+    end
   end
   

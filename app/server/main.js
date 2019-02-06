@@ -8,13 +8,14 @@ Meteor.startup(() => {
 
   Meteor.methods({
     'inserirContato'(contato){
+      var usuario = Meteor.user(); // traz as informações do usuario logado  
+      var existe = Contato.findOne({ //verifica se já existe o contato 
+        celular: contato.celular, dono: usuario._id
+      });
       
-      var existe = Contato.findOne({ //verifica se já existe
-        celular: contato.celular
-      })
-
+      contato.dono = usuario._id; //quando é inserido um novo contato ele salva o id do usuario logado para vincular-lo com ele
       if(existe){
-        throw new Meteor.Error(409, "Celular já cadastrado para outro contato.")
+        throw new Meteor.Error(409, "Celular já cadastrado.")
       }else{
         Contato.insert(contato);  // cadastra o contato
       }

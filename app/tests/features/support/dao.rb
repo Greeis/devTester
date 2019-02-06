@@ -14,8 +14,9 @@ class DAO
         contatos.delete_many('celular' => celular)
     end
 
-    def limpa_contatos
-        contatos.delete_many
+    def limpa_contatos(email_usuario)
+        u = usuarios.find('emails.address' => email_usuario).first
+        contatos.delete_many('dono' => u[:_id])
     end
 
 
@@ -26,7 +27,10 @@ class DAO
     end
 
     def contatos
-        conecta[:contatos]
+        conecta[:contatos] # conecta a colecion contato
     end
 
+    def usuarios
+        conecta[:users]
+    end
 end

@@ -1,0 +1,38 @@
+Projeto Prático
+
+0 - Entendendo o projeto
+1 - HTML e CSS (front end)
+2 - Bootstrap
+3 - Framework reativo MeteorJs (nodejs)
+4 - Modelo de Dados
+5 - Testes
+6 - Controle de acesso e login com Meteor Accounts
+7 - Deploy no Heroku
+8 - Automação dos Testes
+9 - Build + Deploy no Jenkins
+10 - Relatórios e evidências
+
+Aulas de Apoio
+
+1 - Introdução ao HTML e CSS
+2 - Introdução a JavaScript
+3 - Entendendo o MongoDB
+4 - Ruby para Testers
+
+Sprint 1
+
+BDD para especificar a historia de usuario
+Behavaior Driven Development
+Desenvolvimento guiado por comportamento
+
+
+- Novo Contato
+ - Criar o layout de testes do projeto
+ - Criar a estrutura de testes do projeto
+ - Modelo de Dados
+ - Estrutura care do projeto
+
+- Lista Contato
+ - Criar um layout em HTML
+ - Criar um método que retorna os meus contatos cadastrados
+ - Exibir os metodos na pagina

@@ -14,8 +14,12 @@ webapp@1.7.1                  # Serves a Meteor app over HTTP
 server-render@0.3.1           # Support for server-side rendering
 alexwine:bootstrap-4
 blaze-html-templates
+autopublish
 jquery
 mongo
 juliancwirko:s-alert
 fortawesome:fontawesome
-autopublish
+cleandersonlobo:sweetalert2
+accounts-base
+accounts-password
+reactive-var

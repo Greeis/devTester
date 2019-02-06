@@ -17,6 +17,72 @@ Meteor.startup(function () {
 })
 
 
+// events = ações a usuario
+//helper = informação para obter na tela 
+
+Template.navbar.events({
+    'click #btnSair'(event, instance) {
+        event.preventDefault();
+        Meteor.logout();
+    }
+})
+
+Template.navbar.helpers({
+    fullName() {
+        return Meteor.user().profile.name; // retorna o nome do usuario da função do meteor account
+    }
+})
+
+Template.acesso.events({
+
+    'click #btnLogin'(event, instance) {
+        event.preventDefault();
+
+        var email = $('#loginEmail').val();
+        var senha = $('#loginSenha').val();
+
+        Meteor.loginWithPassword(email, senha, function (err) {
+            if (err) {
+                sAlert.error(err.reason)
+            } else {
+                sAlert.success('Olá, você foi autenticado.')
+            }
+        })
+
+    },
+    'click #btnCadastrar'(event, instance) {
+        event.preventDefault();
+
+        var nome = $('#cadastroNome').val();
+        var email = $('#cadastroEmail').val();
+        var senha = $('#cadastroSenha').val();
+
+        var user = {
+            email: email,
+            password: senha,
+            profile: { name: nome }
+        }
+
+        Accounts.createUser(user, function (err) {
+            if (err) {
+                if (err.reason = 'Email already exists.') {
+                    sAlert.error('Você está cadastrado.');
+                } else {
+                    sAlert.error(err.reason);
+                }
+            } else {
+                sAlert.success('Cadastro efetuado com sucesso');
+            }
+        })
+    }
+
+})
+
+Template.listaContato.onCreated(function () { // quando ele criar uma lista ele executa esse código = construtor
+    this.contatos = new ReactiveVar(Contato.find({ dono: Meteor.user()._id }));  //busca apenas os contatos do usuario
+})
+
+
 Template.listaContato.helpers({
     'minhaLista': function () {
         // var contatos = [
@@ -25,9 +91,9 @@ Template.listaContato.helpers({
         //     { nome: 'Breno', email: 'breno@gmail.com', celular: '11999990966', tipo: 'Telegram' },
         //     { nome: 'Brenda', email: 'brenda@gmail.com', celular: '11999990988', tipo: 'SMS' }
         // ]
-        var contatos = Contato.find().fetch();
-        console.log(contatos);
-        return contatos;
+        // var contatos = Contato.find({dono: Meteor.user()._id}).fetch();
+
+        return Template.instance().contatos.get();
     },
     'retornaIcone': function (tipo) {
         switch (tipo) {
@@ -43,7 +109,24 @@ Template.listaContato.helpers({
     }
 })
 
+
 Template.listaContato.events({
+    'click #btnBuscar'(event, instance) {
+        event.preventDefault();
+
+        var celular = $('#buscaCelular').val();
+
+        var query = { dono: Meteor.user()._id };
+
+        if (celular != '') {
+            query.celular = celular;
+        }
+
+        var resultado = Contato.find(query);
+
+        instance.contatos.set(resultado);
+
+    },
     'click #deletarContato'(event, instance) {
         event.preventDefault();
         swal({

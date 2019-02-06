@@ -20,6 +20,10 @@ class ContatoPage
         click_on 'Adicionar Contato'
     end
 
+    def titulo
+        find('section[id=meusContatos] h4').text
+    end
+
     def remover_contato(celular)
         find('tr', text: celular).find('#deletarContato').click
     end
@@ -39,7 +43,15 @@ class ContatoPage
     def msg_alert_info
         find('.alert-info').text
     end
-    
+
+    def msg_alert_warning
+        find('.alert-warning').text
+    end
+
+    def fecha_salert
+        find('.s-alert-close').click
+    end
+
     def retorna_trs
         all('.table tr')
     end
